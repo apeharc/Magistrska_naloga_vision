@@ -1,6 +1,6 @@
 # Importing all the libraries
 import cv2 as cv
-
+a = 1
 
 # Start the camera with index 1
 capture = cv.VideoCapture(1)
