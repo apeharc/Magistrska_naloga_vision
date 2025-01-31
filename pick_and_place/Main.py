@@ -1,9 +1,10 @@
 # Importing all the libraries
 import cv2 as cv
 
-
-# Start the camera with index 1
-capture = cv.VideoCapture(1)
+# Ask the user to enter the camera number and convert the input to an integer
+camera_pick = int(input("Enter the camera number: "))
+# Start the camera with designated camera number
+capture = cv.VideoCapture(camera_pick)
 # Check if the camera is opened and print the error and exit if the camera is not opened
 if not capture.isOpened():
     print("Error: The camera is not working.")
