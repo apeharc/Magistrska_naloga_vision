@@ -1,22 +1,18 @@
 # Importing all the libraries
 import cv2 as cv
+from picamera2 import Picamera2
+import time
 
-# Ask the user to enter the camera number and convert the input to an integer
-camera_pick = int(input("Enter the camera number: "))
-# Start the camera with designated camera number
-capture = cv.VideoCapture(camera_pick)
-# Check if the camera is opened and print the error and exit if the camera is not opened
-if not capture.isOpened():
-    print("Error: The camera is not working.")
-    exit()
+
+#Start the camera with the default camera number and show the preview
+picam2 = Picamera2()
+# Create a still configuration for the camera which is used to capture the image in high resolution
+capture_config = picam2.create_still_configuration()
+picam2.start(show_preview=True)
 
 while True:
     # Read a frame from the camera and store it in the variable frame and store the return value in ret
-    ret, frame = capture.read()
-     # Check if the frame is read properly and print the error and break the loop if the frame is not read properly
-    if not ret:
-        print("Error: The frame could not be read properly.")
-        break
+    frame = picam2.switch_mode_and_capture_array(capture_config, "image.jpg")
     # Display the frame in a window named 'Camera'
     cv.imshow('Camera', frame)
     # Check if the key 'q' is pressed and break the loop if the key 'q' is pressed
@@ -24,5 +20,5 @@ while True:
         break
 
 # Release the camera and destroy all the windows
-capture.release()
+picam2.stop()
 cv.destroyAllWindows()
